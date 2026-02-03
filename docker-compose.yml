@@ -8,7 +8,7 @@ services:
         environment:
             - MYSQL_DATABASE=cms
             - MYSQL_USER=cms
-            - MYSQL_RANDOM_ROOT_PASSWORD=ConectarTi112233
+            - MYSQL_PASSWORD: ${MYSQL_PASSWORD}
         mem_limit: 1g
         env_file: config.env
         restart: always
