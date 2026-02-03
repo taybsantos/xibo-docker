@@ -48,7 +48,7 @@ services:
       CMS_USE_MEMCACHED: "true"
       MEMCACHED_HOST: cms-memcached
     ports:
-      - "80:80"
+      - "85:80"
     volumes:
       - xibo_custom:/var/www/cms/custom
       - xibo_backup:/var/www/backup
