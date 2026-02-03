@@ -15,7 +15,7 @@ services:
     mem_limit: 1g
 
   cms-xmr:
-    image: ghcr.io/xibosignage/xibo-xmr:1.0
+    image: xibosignage/xibo-xmr:1.0
     restart: always
     ports:
       - "9505:9505"
@@ -32,7 +32,7 @@ services:
     restart: always
 
   cms-web:
-    image: ghcr.io/xibosignage/xibo-cms:release-4.4.0
+    image: xibosignage/xibo-cms:release-4.4.0
     restart: always
     depends_on:
       - cms-db
