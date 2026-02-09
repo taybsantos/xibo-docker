@@ -1,16 +1,34 @@
-# Xibo Docker
+# Xibo Digital Signage - Docker configuration files
+Xibo is a powerful Open Source Digital Signage platform with a web content management system and player applications 
+for various platforms (Android, ChromeOS, Linux, webOS, Windows and Tizen) to show content on your screens.
+
+See [https://xibosignage.com](https://xibosignage.com) for more information.
 
 [Docker](https://docker.com/) is an application to package and run any
-application in a pre-configured container making it much easier to deploy a Xibo
-CMS with recommended configuration.
+application in a pre-configured container and is the only way to deploy a Xibo
+CMS with recommended and supported configuration.
 
 This repository holds the docker container definitions for Xibo and the docker-compose
 configuration, which is used to bootstrap, start, stop and destroy the installation.
 
+## Licence
+
+[![Licence](https://img.shields.io/github/license/xibosignage/xibo-cms)]()
+
+Copyright (C) 2006-2026 Xibo Signage Ltd and Contributors.
+
+Xibo is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
+License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+
+Xibo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License along with Xibo.
+If not, see <http://www.gnu.org/licenses/>.
+
 ## Installation
 Full installation instructions for supported use of these containers can be
-found in the [Xibo
-Manual](http://xibo.org.uk/manual-tempel/en/install_cms.html)
+found in [our documentation](https://account.xibosignage.com/docs/setup/cms-installation-guides)
 
 ## Directory structure
 
@@ -45,6 +63,6 @@ for pulling the docker containers, starting them and manually installing Xibo.
 ## Reporting problems
 
 Support requests can be reported on the [Xibo Community
-Forum](https://community.xibo.org.uk/). Verified, re-producable bugs with this
+Forum](https://community.xibo.org.uk/). Verified, re-producible bugs with this
 repository can be reported in the [Xibo parent
 repository](https://github.com/xibosignage/xibo/issues).
