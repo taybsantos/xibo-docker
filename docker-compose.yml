@@ -1,48 +1,63 @@
 version: "2.1"
 
 services:
-    cms-db:
-        image: mysql:8.4
-        volumes:
-            - "./shared/db:/var/lib/mysql:Z"
-        environment:
-            - MYSQL_DATABASE=cms
-            - MYSQL_USER=cms
-            - MYSQL_RANDOM_ROOT_PASSWORD=yes
-        mem_limit: 1g
-        env_file: config.env
-        restart: always
-    cms-xmr:
-        image: ghcr.io/xibosignage/xibo-xmr:1.0
-        ports:
-            - "9505:9505"
-        restart: always
-        mem_limit: 256m
-        env_file: config.env
-    cms-web:
-        image: ghcr.io/xibosignage/xibo-cms:release-4.4.0
-        volumes:
-            - "./shared/cms/custom:/var/www/cms/custom:Z"
-            - "./shared/backup:/var/www/backup:Z"
-            - "./shared/cms/web/theme/custom:/var/www/cms/web/theme/custom:Z"
-            - "./shared/cms/library:/var/www/cms/library:Z"
-            - "./shared/cms/web/userscripts:/var/www/cms/web/userscripts:Z"
-            - "./shared/cms/ca-certs:/var/www/cms/ca-certs:Z"
-        restart: always
-        environment:
-            - MYSQL_HOST=cms-db
-            - XMR_HOST=cms-xmr
-            - CMS_USE_MEMCACHED=true
-            - MEMCACHED_HOST=cms-memcached
-        env_file: config.env
-        ports:
-            - "85:80"
-        mem_limit: 1g
-    cms-memcached:
-        image: memcached:alpine
-        command: memcached -m 15
-        restart: always
-        mem_limit: 100M
-    cms-quickchart:
-      image: ianw/quickchart
-      restart: always
+  cms-db:
+    image: mysql:8.4
+    restart: always
+    mem_limit: 1g
+    env_file: config.env
+    environment:
+      # Garante que o MySQL use os valores do config.env (Coolify)
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./shared/db:/var/lib/mysql:Z
+
+  cms-xmr:
+    image: ghcr.io/xibosignage/xibo-xmr:1.0
+    restart: always
+    mem_limit: 256m
+    env_file: config.env
+    ports:
+      - "9505:9505"
+
+  cms-web:
+    image: ghcr.io/xibosignage/xibo-cms:release-4.4.0
+    restart: always
+    mem_limit: 1g
+    env_file: config.env
+    environment:
+      - MYSQL_HOST=cms-db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+      - XMR_HOST=cms-xmr
+
+      - CMS_USE_MEMCACHED=true
+      - MEMCACHED_HOST=cms-memcached
+      - SERVER_NAME=${SERVICE_FQDN_CMS_WEB}
+      - CMS_URL=${SERVICE_URL_CMS_WEB}
+
+    ports:
+      - "85:80"
+    volumes:
+      - ./shared/cms/custom:/var/www/cms/custom:Z
+      - ./shared/backup:/var/www/backup:Z
+      - ./shared/cms/web/theme/custom:/var/www/cms/web/theme/custom:Z
+      - ./shared/cms/library:/var/www/cms/library:Z
+      - ./shared/cms/web/userscripts:/var/www/cms/web/userscripts:Z
+      - ./shared/cms/ca-certs:/var/www/cms/ca-certs:Z
+
+  cms-memcached:
+    image: memcached:alpine
+    restart: always
+    mem_limit: 100M
+    command: memcached -m 15
+
+  cms-quickchart:
+    image: ianw/quickchart
+    restart: always
